@@ -1,11 +1,12 @@
-import { Controller, Get, Post, Req, Redirect, Param } from '@nestjs/common';
+import { Controller, Get, Post, Req, Redirect, Body, Param} from '@nestjs/common';
 import { Request } from 'express';
+import { CreateUserDto } from './create-user.dto';
 
 @Controller('users')
 export class UsersController {
   @Post()
-  create(): string {
-    return 'The record have been created.';
+  async create(@Body() createUserDto: CreateUserDto){
+    return `The record have been created. Details: #${createUserDto.username}`;
   }
 
   @Get()
