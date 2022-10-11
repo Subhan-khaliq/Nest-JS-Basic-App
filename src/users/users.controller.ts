@@ -10,7 +10,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { CreateUserDto } from './create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
