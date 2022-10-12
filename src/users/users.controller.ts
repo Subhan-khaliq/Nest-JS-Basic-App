@@ -20,14 +20,14 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    this.usersService.create(createUserDto);
-    return 'Great! Your Requested Record has just been created.';
-  }
+  // @Post()
+  // async create(@Body() createUserDto: CreateUserDto) {
+  //   this.usersService.create(createUserDto);
+  //   return 'Great! Your Requested Record has just been created.';
+  // }
 
   @Get()
-  async findAll(): Promise<User[]> {
+  findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
