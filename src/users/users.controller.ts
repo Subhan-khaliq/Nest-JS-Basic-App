@@ -11,12 +11,15 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UsersService  } from './users.service';
 
 @Controller('users')
 export class UsersController {
+  constructor(private usersService: UsersService) {}
+
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    return `The record have been created`;
+    this.usersService.create(createUserDto);
   }
 
   @Get()
