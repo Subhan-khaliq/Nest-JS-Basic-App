@@ -11,7 +11,8 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UsersService  } from './users.service';
+import { User } from './interfaces/user.interface';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
@@ -20,12 +21,12 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     this.usersService.create(createUserDto);
+    return 'Great! Your Requested Record has just been created.';
   }
 
   @Get()
-  @Redirect('https://nestjs.com', 301)
-  findAll(): string {
-    return 'This action will show all the users';
+  async findAll(): Promise<User[]> {
+    return this.usersService.findAll();
   }
 
   @Get(':id')
