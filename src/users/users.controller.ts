@@ -8,6 +8,8 @@ import {
   Delete,
   Param,
   Put,
+  ParseIntPipe,
+  HttpStatus,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -33,9 +35,14 @@ export class UsersController {
   findone(@Req() req: Request): string {
     return `This user have #${req.params.id}`;
   }
-
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
+  ) {
     return `The requested user has been deleted which has id of #${id}`;
   }
 
