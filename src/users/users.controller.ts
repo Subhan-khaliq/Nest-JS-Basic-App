@@ -25,6 +25,10 @@ export class UsersController {
   //   this.usersService.create(createUserDto);
   //   return 'Great! Your Requested Record has just been created.';
   // }
+  @Post()
+  async createUser(@Body() user: CreateUserDto) {
+    return this.usersService.createUser(user);
+  }
 
   @Get()
   findAll() {
