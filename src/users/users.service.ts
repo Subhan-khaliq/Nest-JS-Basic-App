@@ -15,8 +15,12 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  findOne(id: number): Promise<User> {
-    return this.usersRepository.findOneBy({ id });
+  async findOne(id: number): Promise<User> {
+    const user = await this.usersRepository.findOneBy({ id });
+    if (user) {
+      return user;
+    }
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
 
   async createUser(user: CreateUserDto): Promise<User> {
@@ -24,8 +28,12 @@ export class UsersService {
     return this.usersRepository.save(newUser);
   }
 
-  async remove(id: number): Promise<void> {
-    await this.usersRepository.delete(id);
+  async deleteUser(id: number): Promise<string> {
+    const deletedUser = await this.usersRepository.delete(id);
+    if (!deletedUser.affected) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    return `User deleted with the id:${id}`;
   }
 
   async updateUser(id: number, user: CreateUserDto): Promise<User> {
@@ -35,6 +43,6 @@ export class UsersService {
       return updatedUser;
     }
 
-    throw new HttpException('Todo not found', HttpStatus.NOT_FOUND);
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
 }

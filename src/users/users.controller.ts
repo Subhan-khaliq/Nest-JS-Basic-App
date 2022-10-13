@@ -20,11 +20,6 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  // @Post()
-  // async create(@Body() createUserDto: CreateUserDto) {
-  //   this.usersService.create(createUserDto);
-  //   return 'Great! Your Requested Record has just been created.';
-  // }
   @Post()
   async createUser(@Body() user: CreateUserDto) {
     return this.usersService.createUser(user);
@@ -47,15 +42,11 @@ export class UsersController {
     )
     id: number,
   ) {
-    return this.usersService.remove(id);
+    return this.usersService.deleteUser(id);
   }
 
   @Put(':id')
   async updateUser(@Param('id') id: number, @Body() user: CreateUserDto) {
     return this.usersService.updateUser(id, user);
   }
-  // @Put(':id')
-  // update(@Param('id') id: string) {
-  //   return `The requested user has been updated which has id of #${id}`;
-  // }
 }
