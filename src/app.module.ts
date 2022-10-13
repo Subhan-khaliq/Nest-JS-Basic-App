@@ -4,6 +4,7 @@ import { ProductsModule } from './products/products.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { User } from './users/entities/user.entity';
       entities: [User],
       synchronize: true,
     }),
+    AuthModule,
   ],
   controllers: [],
   providers: [],
