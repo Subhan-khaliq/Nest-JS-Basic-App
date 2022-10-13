@@ -19,7 +19,6 @@ import { UsersService } from './users.service';
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
-
   @Post()
   async createUser(@Body() user: CreateUserDto) {
     return this.usersService.createUser(user);
