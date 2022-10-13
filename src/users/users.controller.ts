@@ -36,8 +36,12 @@ export class UsersController {
   }
 
   @Get(':id')
-  findone(@Req() req: Request): string {
-    return `This user have #${req.params.id}`;
+  findOne(@Param() id: number) {
+    console.log(
+      this.usersService.findOne(id),
+      ' .................................................',
+    );
+    return this.usersService.findOne(id);
   }
   @Delete(':id')
   remove(
@@ -45,9 +49,9 @@ export class UsersController {
       'id',
       new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
     )
-    id: string,
+    id: number,
   ) {
-    return `The requested user has been deleted which has id of #${id}`;
+    return this.usersService.remove(id);
   }
 
   @Put(':id')

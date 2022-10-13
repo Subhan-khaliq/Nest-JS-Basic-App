@@ -15,14 +15,13 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  findOne(id: number): Promise<User> {
+  async findOne(id: number): Promise<User> {
     return this.usersRepository.findOneBy({ id });
   }
 
   async createUser(user: CreateUserDto): Promise<User> {
     const newUser = this.usersRepository.create(user);
-    this.usersRepository.save(newUser);
-    return newUser;
+    return this.usersRepository.save(newUser);
   }
 
   async remove(id: number): Promise<void> {
