@@ -36,11 +36,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param() id: number) {
-    console.log(
-      this.usersService.findOne(id),
-      ' .................................................',
-    );
+  findone(@Param('id') id: number) {
     return this.usersService.findOne(id);
   }
   @Delete(':id')
@@ -55,7 +51,11 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string) {
-    return `The requested user has been updated which has id of #${id}`;
+  async updateUser(@Param('id') id: number, @Body() user: CreateUserDto) {
+    return this.usersService.updateUser(id, user);
   }
+  // @Put(':id')
+  // update(@Param('id') id: string) {
+  //   return `The requested user has been updated which has id of #${id}`;
+  // }
 }

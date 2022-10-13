@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 
@@ -15,7 +15,7 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  async findOne(id: number): Promise<User> {
+  findOne(id: number): Promise<User> {
     return this.usersRepository.findOneBy({ id });
   }
 
@@ -26,5 +26,15 @@ export class UsersService {
 
   async remove(id: number): Promise<void> {
     await this.usersRepository.delete(id);
+  }
+
+  async updateUser(id: number, user: CreateUserDto): Promise<User> {
+    await this.usersRepository.update(id, user);
+    const updatedUser = await this.usersRepository.findOneBy({ id });
+    if (updatedUser) {
+      return updatedUser;
+    }
+
+    throw new HttpException('Todo not found', HttpStatus.NOT_FOUND);
   }
 }
