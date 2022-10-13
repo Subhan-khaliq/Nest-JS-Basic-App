@@ -21,7 +21,6 @@ import { AuthModule } from './auth/auth.module';
       entities: [User],
       synchronize: true,
     }),
-    AuthModule,
   ],
   controllers: [],
   providers: [],

@@ -2,8 +2,6 @@ import {
   Controller,
   Get,
   Post,
-  Req,
-  Redirect,
   Body,
   Delete,
   Param,
