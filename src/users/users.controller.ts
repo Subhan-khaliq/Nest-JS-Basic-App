@@ -11,16 +11,18 @@ import {
   ParseIntPipe,
   HttpStatus,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './interfaces/user.interface';
+import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
+import * as bcrypt from 'bcrypt';
 
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
-  @Post()
-  async createUser(@Body() user: CreateUserDto) {
+  @Post('/signup')
+  async createUser(@Body() user: CreateUserDto): Promise<User> {
+    const saltOrRounds = 10;
+    user.password = await bcrypt.hash(user.password, saltOrRounds);
     return this.usersService.createUser(user);
   }
 

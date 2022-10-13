@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     ProductsModule,
     UsersModule,
+    AuthModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
