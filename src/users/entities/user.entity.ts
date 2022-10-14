@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Product } from 'src/products/entities/product.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -16,4 +16,7 @@ export class User {
 
   @Column({ nullable: true })
   email: string;
+
+  @OneToMany(() => Product, (product: Product) => product.user)
+  public products: Product[];
 }
