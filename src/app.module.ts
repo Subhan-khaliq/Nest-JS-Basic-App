@@ -3,23 +3,29 @@ import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
     ProductsModule,
     UsersModule,
     AuthModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'students',
-      entities: [User],
-      synchronize: true,
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DB_HOST'),
+        port: +configService.get<number>('DB_PORT'),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_NAME'),
+        entities: [User],
+        synchronize: true,
+      }),
+      inject: [ConfigService],
     }),
   ],
   controllers: [],
