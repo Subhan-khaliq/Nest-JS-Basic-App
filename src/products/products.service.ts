@@ -33,6 +33,7 @@ export class ProductsService {
     await this.productsRepository.update(id, updateProductDto);
     const updatedProduct = await this.productsRepository.findOneBy({ id });
     if (updatedProduct) {
+      console.log(updatedProduct, '....................');
       return updatedProduct;
     }
 
